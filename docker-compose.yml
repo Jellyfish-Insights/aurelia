@@ -1,0 +1,89 @@
+version: '3.2'
+
+services:
+    # Postgres database called analytics_platform used by aurelia. 
+    # This database stores aurelia's data and also the data transformed
+    # from the datalake.
+    analytics_platform:
+        image: postgres:10
+        container_name: analytics_platform
+        environment:
+            # Information used to create the Postgres database.
+            # We recommend to change the password to a more secure one.
+            # IF YOU CHANGE ANY OF THESE FIELDS DON'T FORGET TO UPDATE 
+            # THE FIELD "BusinessDatabase" in the appsetting.json configuration
+            # file to reflect this changes.
+            - POSTGRES_USER=fee
+            - POSTGRES_PASSWORD=dbpassword
+            - POSTGRES_DB=analytics_platform
+        ports:
+            # Binding the port 5432 in the host system with the port 5432 port
+            # in the container. If you change the CONTAINER port, update the
+            # field "BusinessDatabase" in the appsetting.json configuration
+            # file to reflect this changes.
+            - 5432:5432
+        volumes:
+            - analytics_platform_data:/var/lib/postgresql/data
+        networks:
+            - andromeda_default
+    
+    # Aurelia's transformers. 
+    # Transformer's are responsible to get the data from andromeda datalake,
+    # transform it (filter, format, etc) and store on analytics_platform database.
+    transformers:
+        build:
+            context: .
+            dockerfile: './src/ConsoleApp/Dockerfile'
+        # build:
+        #     context: .
+        #     dockerfile: './src/ConsoleApp/build-from-remote.Dockerfile'
+        container_name: transformers
+        depends_on:
+            - analytics_platform
+        volumes:
+            # Bind a directory on the host with all the configuration files.
+            # Replace '.${PWD}/aurelia' with the path to the folder with your
+            # configuration file: appsettings.json
+            - ${PWD}/aurelia:/app/release/config
+        networks:
+            - andromeda_default
+        environment:
+            # Transformers run every "X" seconds.
+            # This variable controls how much time the transformers will wait to
+            # run again.
+            - TRANSFORMATION_SLEEP_TIME=120 #seconds
+    
+    # Aurelia web page.        
+    aurelia:
+        build: 
+            context: .
+            dockerfile: './src/WebApp/Dockerfile'
+        container_name: aurelia
+        depends_on:
+            - transformers
+        volumes:
+            # Bind a directory on the host with all the configuration files.
+            # Replace '.${PWD}/aurelia' with the path to the folder with your
+            # configuration file: appsettings.json
+            - ${PWD}/aurelia:/app/release/config
+        ports:
+            # Ports exposed to the host system. You can access the website
+            # on your host using this port.
+            - 5000:5000
+        networks:
+            - andromeda_default
+
+volumes:
+    analytics_platform_data:
+
+networks:
+    # Aurelia's transformers need access to Andromeda's datalake.
+    # If you are running all the databases in docker containers,
+    # all the containers needs to be on the same docker network. 
+    # For this reason aurelia is in the same internal network then
+    # andromeda. If you are running the databases outside the docker,
+    # e.g locally or in a separate server, you just need to set the 
+    # "ConnectionStrings" field in the appsettings.json to point
+    # to your database.
+    andromeda_default:
+        external: true
