@@ -1,0 +1,3 @@
+[submodule "src/andromeda"]
+	path = src/andromeda
+	url = https://github.com/Jellyfish-Insights/andromeda
