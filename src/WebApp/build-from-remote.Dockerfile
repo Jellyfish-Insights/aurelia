@@ -12,12 +12,13 @@ RUN apt update && \
 
 # You can specify these in docker-compose.yml or with
 # docker build --build-args "AURELIA_GIT_REF=git_branch_name" .
-ARG AURELIA_GIT_URL=https://github.com/FredRanieri/aurelia.git
+ARG AURELIA_GIT_URL=https://github.com/Jellyfish-Insights/aurelia.git
 ARG AURELIA_GIT_REF=master
 
 RUN git clone "$AURELIA_GIT_URL" && \
     cd aurelia && \
-    git checkout "$AURELIA_GIT_REF"
+    git checkout "$AURELIA_GIT_REF" &&\
+    git submodule update --init --recursive
 
 WORKDIR /app/aurelia/src
 

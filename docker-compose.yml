@@ -31,12 +31,13 @@ services:
     # Transformer's are responsible to get the data from andromeda datalake,
     # transform it (filter, format, etc) and store on analytics_platform database.
     transformers:
-        build:
-            context: .
-            dockerfile: './src/ConsoleApp/Dockerfile'
+        # If you are developing remember as soon as you clone the repository
+        # run: git submodule update --init --recursive
+        # If not the build will fail!  
         # build:
         #     context: .
-        #     dockerfile: './src/ConsoleApp/build-from-remote.Dockerfile'
+        #     dockerfile: './src/ConsoleApp/Dockerfile'
+        build: https://raw.githubusercontent.com/Jellyfish-Insights/aurelia/master/src/WebApp/build-from-remote.Dockerfile
         container_name: transformers
         depends_on:
             - analytics_platform
