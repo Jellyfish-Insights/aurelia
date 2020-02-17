@@ -7,17 +7,18 @@
 
 </div>
 
-# <strong>Aurelia</strong>
+# Aurelia
 
 ## What is this repo?
 
-  This repo contains the main code of the "FEE YEAR Analytics Platform".
+  This repo contains the main code of the "Aurelia Analytics Platform".
 
-## What is the FEE YEAR-AP
+## What is the Aurelia
 
   It is an application that will collect analytics data from YouTube, AdWords
-  and Facebook and generate reports about it, so that FEE can improve their
-  reach on the population and spread their ideas on liberty.
+  and Facebook and generate reports about it.
+
+  More information about it can be seen on [Jellyfish Insights](http://jellyfishinsights.com/)
 
 ## Building and Running
 
@@ -31,10 +32,10 @@
 ### System Requirements
 
 You need:
-  - .NET Core SDK 2.1.300
-  - PostgreSQL 10
-  - node v9.11.1
-  - npm 5.6.0
+  - .NET Core SDK 2.1.300;
+  - PostgreSQL 10;
+  - node v9.11.1;
+  - npm 5.6.0.
 
 ### System Bootstrap
 
