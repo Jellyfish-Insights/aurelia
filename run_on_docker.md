@@ -1,5 +1,9 @@
 # Introduction
 
+This tutorial was based on linux commands. Therefore, keep in mind that if you
+plan to run this tutorial on a Windows machine, you will need to adapt the steps
+that uses terminal commands.
+
 ## Prerequisites
 
 - Docker
@@ -75,8 +79,8 @@ container leave this with the container name.
 - Password: Database's password.  
 - Port: Port in which the database is listening.
 
-All this information should be on a unique string separated by '`;`', you can see
-an example below.
+All this information should be on a unique string separated by semicolon (`;`),
+you can see an example below.
 
 If you are running the database in containers, all these values should match the
 values put in the `docker-compose.yml` file.
@@ -86,8 +90,9 @@ container set up as the data_lake on the `docker-compose.yml` (default
 configuration).
 
 1. Create an `appsettings.json` file on the `andromeda` folder with a text
-    editor. You can create and open the file with the vim editor executing the
-    following command on a terminal:
+   editor of your preference. For illustrate the process, we will be using
+   vim. You can create and open the file with the vim editor executing the
+   following command on a terminal:
 
     ```bash
     vim appsettings.json
@@ -99,7 +104,7 @@ configuration).
     {
         "ConnectionStrings": {
             "DataLakeDatabase": "Host=data_lake;Database=data_lake;Username=fee;Password=dbpassword;Port=5433"
-        },
+        }
     }
     ```
 
@@ -168,9 +173,10 @@ The following steps demonstrate how to create and configure the file
     - Password: Database's password.  
     - Port: Port in which the database is listening.
 
-    All this information should be on a unique string separated by '`;`'.
-    If you are running the database in containers, all these values should match the
-    values put in the `docker-compose.yml` file.
+   All this information should be on a unique string separated by semicolon
+   (`;`).
+   If you are running the database in containers, all these values should match the
+   values put in the `docker-compose.yml` file.
 
 5. Replace the value in field `"DefaultUserEmail"` with the email of the System
    administrator.
@@ -179,46 +185,67 @@ The following steps demonstrate how to create and configure the file
 ## Running the docker containers
 
 Once you have the folders `andromeda` and `aurelia` with all the necessary
-files, to run the containers, we just need to run the docker-compose files.
+files, to run the containers, we just need clone and set up Aurelia repository.
 
 **Since Aurelia uses Andromeda as its backend, we need to run Andromeda
 docker-compose file first for the whole system to work.**
 
-### Getting Andromeda docker-compose file
+### Cloning the repository
 
-To get the docker-compose file for Andromeda, run the following command on the
-terminal:
+The following steps demonstrates how to clone and set up Aurelia repository.
 
-```bash
-curl -o docker-andromeda.yml https://raw.githubusercontent.com/Jellyfish-Insights/andromeda/master/docker-compose.yml
-```
-
-### Optional: Editing the docker-andromeda.yml
-
-**If you want to run Andromeda with its default features and have the folder `andromeda`
-on the same directory than the `docker-andromeda.yml` file you can skip this section.**
-
-By default the Andromeda container will search for a folder called `andromeda` on
-the directory where the docker-andromeda.yml is located. You can change this by
-editing the `docker-andromeda.yml` file. The following steps show how to edit
-this file using the terminal and the vim text editor.
-
-1. Open the docker-andromeda.yml file with vim:
+1. The first step is to clone the repository:
 
     ```bash
-    vim docker-andromeda.yml
+    git clone https://github.com/Jellyfish-Insights/aurelia
+    cd aurelia
     ```
 
-2. Locate the line under the Andromeda service:
+2. After you cloned the Aurelia repository, you need to run the following
+   command to fetch the Andromeda repository.
+
+    ```bash
+    git submodule update --init --recursive
+    ```
+
+   Aurelia uses Andromeda as git submodule. This is because Aurelia needs some
+   of the files included on Andromeda repository to be compiled. To know more
+   about how git submodule see this [link](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+
+3. Now, the next step is to edit the docker-compose.yml files.
+
+### Editing the andromeda/docker-compose.yml
+
+By default the Andromeda container will search for a folder called `andromeda`
+on the directory where the docker-compose.yml is located. We don't recommend
+to put the folder with the credentials inside the git repository folder.
+
+You can change `andromeda` path by editing the `docker-compose.yml` file. The
+following steps show how to edit this file using the terminal and the vim text
+editor.
+
+1. Inside the aurelia directory navigate to the andromeda folder.
+
+    ```bash
+    cd ./src/andromeda
+    ```
+
+2. Open the docker-compose.yml file with vim:
+
+    ```bash
+    vim docker-compose.yml
+    ```
+
+3. Locate the line under the Andromeda service:
 
     ```yml
     - ./andromeda:/app/release/credentials
     ```
 
-3. Change the path on the left side of '`:`' to the path to your `andromeda` folder
+4. Change the path on the left side of '`:`' to the path to your `andromeda` folder
 which you have all the credentials and the file `appsettings.json`.
 
-4. [OPTIONAL][Changing Fetcher time] Locate the line under the Andromeda service:
+5. [OPTIONAL][Changing Fetcher time] Locate the line under the Andromeda service:
 
     ```yml
     - FETCH_SLEEP_TIME=120 #seconds
@@ -227,7 +254,7 @@ which you have all the credentials and the file `appsettings.json`.
    Andromeda's fetchers fetches the social media data every "X" seconds. This
    variable controls how much time the fetchers will wait to run again.
 
-5. Close and save the file.
+6. Close and save the file.
 
 **You can edit the docker-compose.yml as you need, this file has descriptions for
 all important fields necessary to run the application. If you change the
@@ -244,39 +271,36 @@ terminal:
 sudo pkill -9 postgres
 ```
 
-To run the Andromeda container, open a terminal window on the folder where you
-downloaded `docker-andromeda.yml` file and execute the following command:
+To run the Andromeda container, open a terminal in the aurelia directory then
+navigate to the andromeda folder:
 
 ```bash
-docker-compose -f docker-andromeda.yml up andromeda
+cd ./src/andromeda
 ```
 
-### Getting Aurelia docker-compose file
-
-To get the docker-compose file for Aurelia run the following command on the
-terminal:
+Then execute the following command.
 
 ```bash
-curl -o docker-aurelia.yml https://raw.githubusercontent.com/Jellyfish-Insights/aurelia/master/docker-compose.yml
+docker-compose -f docker-compose.yml up andromeda
 ```
 
-### Optional: Editing the docker-aurelia.yml
+Now that you have Andromeda container running, we can run the Aurelia container.
+However, we will need to edit the aurelia/docker-compose.yml to point the
+`aurelia` folder first.
 
-**If you want to run Aurelia with its default features and have the folder
-`aurelia` on the same directory than the `docker-aurelia.yml` file you can skip
-this section.**
+### Editing the aurelia/docker-compose.yml
 
-By editing the `docker-aurelia.yml` file you can modify the behavior of your
+By editing the `docker-compose.yml` file you can modify the behavior of your
 Aurelia container, like the port used by the web page, `aurelia` folders path,
 transformers time and database information.
 
 The following steps show how to edit `aurelia` folders path using the terminal
 and the vim text editor.
 
-1. Open the docker-aurelia.yml file with vim:
+1. Open the docker-compose.yml located  file with vim:
 
     ```bash
-    vim docker-aurelia.yml
+    vim docker-compose.yml
     ```
 
 2. Locate all occurrences of the line:
@@ -314,7 +338,7 @@ which you have the file `appsettings.json`.
 
 6. Close and save the file.
 
-**You can edit the docker-aurelia.yml as you need, this file has descriptions for
+**You can edit the docker-compose.yml as you need, this file has descriptions for
 all important fields necessary to run the application. If you change the
 database information (recommended on production) don't forget to update the
 `appsettings.json` with the corresponding changes.**
@@ -322,35 +346,38 @@ database information (recommended on production) don't forget to update the
 ### Running Aurelia container
 
 After you have Andromeda container running, to run the Aurelia container, open a
-terminal window on the folder where you downloaded `docker-aurelia.yml` file
-and execute the following command:
+terminal window in the folder that you cloned the aurelia repository and execute
+the following command:
 
 ```bash
-docker-compose -f docker-aurelia.yml up aurelia
+docker-compose -f docker-compose.yml up aurelia
 ```
 
-# Developing
+You can access the Aurelia's Web page by running the following link on your
+browser:
 
-* git clone https://github.com/Jellyfish-Insights/aurelia
-* cd aurelia
+http://localhost:5000
 
-Bring andromeda
-* git submodule update --init --recursive
+# Development tips
 
-* cd src/andromeda
+By default, the docker-compose files will build the image from the files stored
+in the remote repositories:
 
-  Edit docker-compose.yml to point to the configuration folder. Change to
-  local.Dockerfile or change the branch and git directory, maybe dotnet clean,
-  explain git submodule, how to update, how to docker compose file are placed
-  and where to edit them!
+https://github.com/Jellyfish-Insights/andromeda
+https://github.com/Jellyfish-Insights/aurelia
 
-FAQ: sudo pkill -9 postgres
+Therefore, to see your changes applied, you will need to push the files to the
+correspondent directories.
 
-* docker-compose -f docker-compose.yml up --build --force-recreate andromeda
+You can change this easily by changing the Dockerfile used in each
+docker-compose.yml by the local.Dockerfile version. In each folder that has one
+Dockerfile
 
---build --force-recreate flags forces docker-compose to rebuild your image if
+```bash
+docker-compose -f docker-compose.yml up --build --force-recreate andromeda
+```
+
 --build: build images before starting containers.
-
 --force-recreate: Recreate containers even if their configuration and image
 haven't changed.
 
@@ -360,8 +387,3 @@ running containers forcefully and spin up all the containers again even if you
 do not have changed anything into it's configuration. So, if there are any
 changes, those will be picked-up into the newly created containers while
 preserving the state of volumes.
-
-* open another terminal, cd aurelia
-Edit the docker-compose.yml with to point to the configuration folder
-
-docker-compose -f docker-compose.yml up --build --force-recreate andromeda
