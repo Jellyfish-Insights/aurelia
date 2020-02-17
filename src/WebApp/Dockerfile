@@ -43,4 +43,4 @@ COPY --from=builder /app/aurelia/src/WebApp/run.sh .
 RUN chmod +x run.sh
 # Create directory for facebook cache
 RUN mkdir cache
-CMD ./run.sh 2> /dev/null
+CMD ./run.sh

@@ -52,7 +52,7 @@ services:
       # Bind a directory on the host with all the configuration files.
       # Replace '.${PWD}/aurelia' with the path to the folder with your
       # configuration file: appsettings.json
-      - ${PWD}/aurelia:/app/release/config
+      - ./aurelia:/app/release/config
     networks:
       - andromeda_default
     environment:
@@ -86,7 +86,7 @@ services:
       # Bind a directory on the host with all the configuration files.
       # Replace '.${PWD}/aurelia' with the path to the folder with your
       # configuration file: appsettings.json
-      - ${PWD}/aurelia:/app/release/config
+      - ./aurelia:/app/release/config
     ports:
       # Ports exposed to the host system. You can access the website
       # on your host using this port.
