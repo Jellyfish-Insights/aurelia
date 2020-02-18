@@ -399,18 +399,21 @@ and uncomment the line `#dockerfile: "./src/ConsoleApp/local.Dockerfile"`.
 
 By default, docker-compose command doesn't rebuild the image, even if you change
 a file in the build process. To force docker-compose to rebuild your image,
-instead of the default command `docker-compose up` the following one:
+instead of the default command `docker-compose up` use the following one:
 
 ```bash
 docker-compose -f docker-compose.yml up --build --force-recreate andromeda
 ```
 
---build: build images before starting containers.
---force-recreate: Recreate containers even if their configuration and image
+Explanation:
+
+`--build`: build images before starting containers.
+
+`--force-recreate`: Recreate containers even if their configuration and image
 haven't changed.
 
---build is a straightforward and it will create the docker images before
-starting the containers. The --force-recreate flag will stop the currently
+`--build` is a straightforward and it will create the docker images before
+starting the containers. The `--force-recreate` flag will stop the currently
 running containers forcefully and spin up all the containers again even if you
 do not have changed anything into it's configuration. So, if there are any
 changes, those will be picked-up into the newly created containers while
