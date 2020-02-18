@@ -357,7 +357,23 @@ browser:
 
 http://localhost:5000
 
+The Aurelia Web page will be available before the Aurelia Transformers finish
+the data transformation. Therefore, it can take some time for the data be visible
+on the web page (usually the time that you set for the Transformers to run
+again).
+
 ## Development tips
+
+### Prune unused local volumes
+
+If you are building the images multiple times to test your code, it's useful before
+running the docker-compose files prune the unused local volumes. By doing
+this, you will have a fresh build, starting everything from scratch. Run the
+command below on a terminal window to prune unused local volumes:
+
+```bash
+sudo docker volume prune
+```
 
 ### Build from a local copy of the repositories
 
