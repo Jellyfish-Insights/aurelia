@@ -11,8 +11,10 @@ the steps that uses terminal commands.
 - Docker
 - Docker compose
 
-(Instructions of how to install Docker)[https://docs.docker.com/install/linux/docker-ce/ubuntu/]
-(Instructions of how to install Docker Compose)[https://github.com/docker/compose/releases]
+[Instructions of how to install
+Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+
+[Instructions of how to install Docker Compose](https://github.com/docker/compose/releases)
 
 ## Configuration files
 
