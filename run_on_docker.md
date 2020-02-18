@@ -348,7 +348,7 @@ docker-compose -f docker-compose-andromeda.yml up andromeda
 **Depending on your docker-compose permissions, you will need to run the command above as sudo**
 
 Now that you have Andromeda container running, we can run the Aurelia container.
-Open a new terminal window on the directory where you cloned Aurelia's repository and run the following command:
+Open a new terminal window on the root of directory where you cloned Aurelia's repository and run the following command:
 
 ```bash
 docker-compose -f docker-compose-aurelia.yml up aurelia
