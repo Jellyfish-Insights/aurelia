@@ -342,19 +342,15 @@ cd ./src/andromeda
 Then execute the following command.
 
 ```bash
-docker-compose -f docker-compose-andromeda.yml up andromeda
+sudo docker-compose -f docker-compose-andromeda.yml up andromeda
 ```
-
-**Depending on your docker-compose permissions, you will need to run the command above as sudo**
 
 Now that you have Andromeda container running, we can run the Aurelia container.
 Open a new terminal window on the root of directory where you cloned Aurelia's repository and run the following command:
 
 ```bash
-docker-compose -f docker-compose-aurelia.yml up aurelia
+sudo docker-compose -f docker-compose-aurelia.yml up aurelia
 ```
-
-**Depending on your docker-compose permissions, you will need to run the command above as sudo**
 
 You can access Aurelia's Web page by running the following link on your
 browser:
@@ -404,10 +400,8 @@ a file in the build process. To force docker-compose to rebuild your image,
 instead of the default command `docker-compose up` use the following one:
 
 ```bash
-docker-compose -f docker-compose-andromeda.yml up --build --force-recreate andromeda
+sudo docker-compose -f docker-compose-andromeda.yml up --build --force-recreate andromeda
 ```
-
-**Depending on your docker-compose permissions, you will need to run the command above as sudo**
 
 Explanation:
 
