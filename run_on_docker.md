@@ -29,7 +29,7 @@ The first step to run Andromeda and Aurelia is to get the credentials for each
 social media that you want to pull out data from. The credential files are used
 to allow Andromeda to pull your data from the Social Media APIs. You can get
 more information about how to get and configure the credentials for each social
-media on this [link].
+media on this [link](https://github.com/Jellyfish-Insights/andromeda/blob/master/docs/how_to_get_credentials.md).
 
 #### Creating the folder structure
 
