@@ -33,44 +33,43 @@ media on this [link](https://github.com/Jellyfish-Insights/andromeda/blob/master
 
 #### Creating the folder structure
 
-In order to run the Andromeda container, we need to create a folder containing **at
-least one social media credential** and the configuration file `appsettings.json`.
-The file `appsettings.json` is the file that contains additional information
-needed by andromeda to run, like database information and it needs to be in the
-root of this directory. Each credential file needs to be in a folder with the
-name of the social media that it belongs to. The following steps demonstrate how
-to create the folder structure and how to place correctly the necessary files.
+In order to run the Andromeda container, we need to create a folder containing at least one social media credential and the configuration file `appsettings.json` . The file `appsettings.json` is the file that contains additional information needed by andromeda to run, like database information and it needs to be in the root of the created directory. Each credential file needs to be in a folder with the name of the social media that it belongs to. The following steps demonstrate how to create the folder structure and how to place correctly the necessary files.
+To create all the folders needed by Andromeda, open a terminal window and run the following command:
 
-1. To create all the folders needed by Andromeda, open a terminal window and run
-   the following command:
+``` bash
+mkdir andromeda-config && cd andromeda-config && mkdir adwords facebook facebook/adaccount facebook/page instagram youtube && cd ..
+```
 
-    ```bash
-    mkdir andromeda-config && cd andromeda-config && mkdir adwords facebook instagram youtube
-    ```
+In sequence, copy the credential files from each social media to their respective directories inside the `andromeda-config` folder. For instance, if you have all the credentials from the social media that Andromeda supports and you are not using multi-accounts, your folder structure should be the following:
 
-2. In sequence, copy the credential files from each social media to their
-   respective directories inside the `andromeda-config' folder. For instance, if you
-   have all the credentials from the social media that Andromeda supports, your
-   folder structure should be the following:
+```
+andromeda-config
+│ appsettings.json
+│
+└─facebook
+| |  user_credentials.json
+| |
+│ └──adaccount
+| |    user1-adaccount_credentials.json
+│ └──page
+│      user1-page_credentials.json
+|
+└─youtube
+│ |  client_secret.json
+| |
+| └──channel1_name
+│      Google.Apis.Auth.OAuth2.Responses.TokenResponse-Credentials.json
+│
+└─adwords
+|   App.config
+|
+└─instagram
+    user1-instagram_credentials.json
+```
 
-    ```bash
-    andromeda-config
-    │   appsettings.json
-    │
-    └───facebook
-    │       addaccount_credentials.json
-    │       page_credentials.json
-    │
-    └───youtube
-    │       client_secret.json
-    │       Google.Apis.Auth.OAuth2.Responses.TokenResponse-Credentials.json
-    │
-    └───adwords
-    |       App.config
-    |
-    └───instagram
-            instagram_credentials.json
-    ```
+With Andromeda you can pull data from multiple facebook, instagram and YouTube
+channels and store in the same data lake. You can see more details about how to
+set up multiple accounts [here](https://github.com/Jellyfish-Insights/andromeda/blob/master/docs/adding_multiple_accounts.md).
 
 #### Configuring the appsettings.json
 
@@ -163,7 +162,7 @@ The following steps demonstrate how to create and configure the file
    `"Authentication:Google:ClientSecret"` with the Google client ID and secret
    that you created for Aurelia. Also, you can use the same ID and secret that
    you created for youtube credential file `client_secret.json`. More details of
-   how to get this credential can be seen here: [link]
+   how to get this credential can be seen [here](https://github.com/Jellyfish-Insights/andromeda/blob/master/docs/how_to_get_credentials.md).
 
 4. If you plan to run the docker-compose with its default feature leave
    `"ConnectionStrings"` unchanged.
@@ -324,14 +323,6 @@ database information (recommended on production) don't forget to update the
 
 ### Running the containers
 
-In order to run the database containers, we need to kill any postgres process
-running on your computer. You can do this by executing the following command on
-terminal:
-
-```bash
-sudo pkill -9 postgres
-```
-
 To run the Andromeda container, open a terminal in the aurelia directory then
 navigate to the andromeda folder:
 
@@ -344,6 +335,8 @@ Then execute the following command.
 ```bash
 sudo docker-compose -f docker-compose-andromeda.yml up andromeda
 ```
+
+**If you get an error running the database with the the command above, change the port used by the data_lake container on the docker-compose-andromeda.yml file and in the `andromeda-config/appsettings.json`.**
 
 Now that you have Andromeda container running, we can run the Aurelia container.
 Open a new terminal window on the root of directory where you cloned Aurelia's repository and run the following command:
