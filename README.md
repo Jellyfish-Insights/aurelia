@@ -28,7 +28,7 @@ Aurelia was developed by [Brick Abode](https://www.brickabode.com/) as part of t
 
 ## Documentation
 * [Getting started](./docs/running_manually.md)
-* [Running via Docker Container](./docs/run_on_docker.md)
+* [Running via Docker Container](./run_on_docker.md)
 
 ## Contribute to Aurelia
 
