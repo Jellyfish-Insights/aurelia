@@ -2,29 +2,34 @@
 
 ![Aurelia Logo](./assets/aurelia_logo.png)
 
-<!-- todo [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md) -->
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](./docs/code_of_conduct.md)
 
-<!-- todo [![license](https://img.shields.io/badge/license-Apache%202-blue)](License.txt) -->
+[![license](https://img.shields.io/badge/license-Apache%202-blue)](License.txt)
 
 </div>
 
 # Aurelia
 
-## What is this repo?
+## What is this repository?
 
-  This repo contains the main code of the "Aurelia Analytics Platform".
+This repository contains the main code of "Aurelia Analytics Platform".
 
 ## What is the Aurelia
 
-  It is an application that will collect analytics data from YouTube, AdWords
-  and Facebook and generate reports about it.
+Aurelia is an OSS (open source software) and works as a data visualization tool. Easily view your insights all in one place with a Business Intelligence tool that combines your social data into a single table or chart.
 
-  More information about it can be seen on [Jellyfish Insights](http://jellyfishinsights.com/).
+Aurelia allow:
 
-## Running manually
+* [X] Produce a wide array of reports for board meetings and donors
+* [X] View the impact of your performance in a single place
+* [X] Easy to use web-format
 
-If you want to run Aurelia manually you can check the instructions [here](./running_manually.md).
+Aurelia was developed by [Brick Abode](https://www.brickabode.com/) as part of the [Jellyfish Insights](http://jellyfishinsights.com/) and supported by the [Foundation for Economic Education (FEE)](https://fee.org).
 
-## Running via docker container
+## Documentation
+* [Getting started](./docs/running_manually.md)
+* [Running via Docker Container](./docs/run_on_docker.md)
 
-If you want to run Aurelia via docker container you can check the instructions [here](./run_on_docker.md).
+## Contribute to Aurelia
+
+We would love to have you contributing to the Aurelia project. You can see the instruction on how to become an Aurelia contributor [here](./docs/how_to_contribute.md).
