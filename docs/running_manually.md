@@ -12,7 +12,7 @@ To set andromeda as git submodule inside aurelia folder run:
 
  `git submodule update --init --recursive`
 
-Aurelia uses Andromeda as git submodule.
+Aurelia uses Andromeda as a git submodule.
 This is because Aurelia needs some of the files included on the Andromeda repository to be compiled.
 To know more about how git submodule see this [link](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
 
@@ -36,11 +36,11 @@ You need:
   - [node v9.11.1](https://nodejs.org/dist/v9.11.1/docs/api/);
   - [npm 5.6.0](https://www.npmjs.com/package/npm/v/5.6.0).
 
-obs: If you already have another version of node and npm we recommend take a look on the [n package](https://github.com/tj/n) or use the whole systems as a docker container as presented [here](../run_on_docker.md).
+obs: If you already have another version of node and npm we recommend take a look at the [n package](https://github.com/tj/n) or use the whole systems as a docker container as presented [here](../run_on_docker.md).
 
 ### System Bootstrap
 
-You'll need to setup a few things:
+You'll need to set up a few things:
   - Install front-end dependencies;
   - Create initial migration;
   - Place the credential files.
@@ -78,7 +78,7 @@ Inside ./src/andromeda do:
 
 ### Place the credential files
 
-In order to place the credentials on the right folders the instructions can be seen
+In order to place the credentials on the right folders, the instructions can be seen
 [here](https://github.com/Jellyfish-Insights/andromeda/blob/master/docs/run_credentials_script.md#YouTube-Credentials)
 via Python script or manually [here](https://github.com/Jellyfish-Insights/andromeda/blob/master/docs/credential_folder_structure.md).
 
@@ -90,7 +90,7 @@ Docker-compose.
 For Windows, the installation instructions are [here](https://docs.docker.com/docker-for-windows/install/). Docker for
 Windows includes docker-compose.
 
-Export the `DOCKER_USER` variable to ensure docker uses the same
+Export the `DOCKER_USER` variable to ensure the docker uses the same
 user as the host. In Windows, `$USER` isn't defined, so you'll need
 to substitute it by your username:
 ```shell
@@ -121,7 +121,7 @@ This will execute all the jobs. For more information on these jobs check
 ### Setup PostgreSQL (Linux)
 
 We'll need two database servers, so we recommend to just use the
-docker container in the docker compose file:
+docker container in the docker-compose file:
 ```shell
   docker-compose -f docker-compose.daemons.yml up -d data_lake analytics_platform
 ```
