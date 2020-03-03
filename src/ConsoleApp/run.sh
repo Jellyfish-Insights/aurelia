@@ -34,9 +34,12 @@ if all_run_files_exists; then
         SLEEP_TIME = 3600 #seconds
     fi
     echo "My sleep time is: ${TRANSFORMATION_SLEEP_TIME} seconds"
-    
+
     while [ -f ConsoleApp.dll ]
-    do  
+    do
+        echo "Transforming Adwords data"
+        dotnet ConsoleApp.dll transformer -s AdWords
+
         echo "Transforming YouTube data"
         dotnet ConsoleApp.dll transformer -s YouTube
 
