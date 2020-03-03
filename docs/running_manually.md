@@ -1,32 +1,15 @@
 # Introduction
 
-It's possible to run Aurelia manually following the steps below.
+It's possible to run Aurelia manually following the steps below. Besides
+compiling the code, you will need to have an instance of
+[Andromeda](https://github.com/Jellyfish-Insights/andromeda) running. Aurelia
+gets the data from Andromeda's data lake and transforms it to be displayed on the
+Application Page (web page).
 
-You can also run Aurelia via docker container, it's faster(and easier), the instructions can be seen [here](../run_on_docker.md).
+You can also run Aurelia via docker container the instructions can be seen
+[here](../run_on_docker.md).
 
-## Building Andromeda
-
-In order to check how [Andromeda(Aurelia's backend)](https://github.com/Jellyfish-Insights/andromeda) work you can check the instructions [here](https://github.com/Jellyfish-Insights/andromeda/blob/master/docs/how_to_setup.md)
-
-To set andromeda as git submodule inside aurelia folder run:
-
- `git submodule update --init --recursive`
-
-Aurelia uses Andromeda as a git submodule.
-This is because Aurelia needs some of the files included on the Andromeda repository to be compiled.
-To know more about how git submodule see this [link](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
-
-## Building and Running
-
-Aurelia is composed of the following subsystems:
-  - Andromeda(backend);
-  - Web App.
-
-### System Requirements
-
-Tip: The installation of a few of Aurelia's prerequisites are covered on our medium article [here](https://medium.com/@insightsjellyfish/andromeda-storing-your-social-media-data-in-one-place-b91a6ab3d022).
-
-Obs: The medium article is focused on [Andromeda(Aurelia's backend)](https://github.com/Jellyfish-Insights/andromeda).
+## System Requirements
 
 You need:
   - [.NET Core SDK 2.1.X](https://dotnet.microsoft.com/download/dotnet-core/2.1)
@@ -36,14 +19,9 @@ You need:
   - [node v9.11.1](https://nodejs.org/dist/v9.11.1/docs/api/);
   - [npm 5.6.0](https://www.npmjs.com/package/npm/v/5.6.0).
 
-obs: If you already have another version of node and npm we recommend take a look at the [n package](https://github.com/tj/n) or use the whole systems as a docker container as presented [here](../run_on_docker.md).
-
-### System Bootstrap
-
-You'll need to set up a few things:
-  - Install front-end dependencies;
-  - Create initial migration;
-  - Place the credential files.
+OBS: If you already have another version of node and npm we recommend take a
+look at the [n package](https://github.com/tj/n) or run Aurelia's docker container as
+presented [here](../run_on_docker.md).
 
 ### Note for Windows
 
@@ -52,37 +30,12 @@ manual need to run over "Git Bash", not over "cmd.exe" or "powershell".
 You also need to run the following commands from an admin shell to be able
 to install the npm dependencies.
 ``` shell
-  npm install --global --production windows-build-tools
-  npm install --global node-gyp
+npm install --global --production windows-build-tools
+npm install --global node-gyp
 ```
 This will allow you to do `npm install`.
 
-### Install front-end dependencies
-
-Go to:
-
-`aurelia/src/WebApp` and,
-
-Do:
-```shell
-  npm install
-```
-
-### Build back-end
-
-Inside ./src/andromeda do:
-```shell
-  dotnet clean
-  dotnet build
-```
-
-### Place the credential files
-
-In order to place the credentials on the right folders, the instructions can be seen
-[here](https://github.com/Jellyfish-Insights/andromeda/blob/master/docs/run_credentials_script.md#YouTube-Credentials)
-via Python script or manually [here](https://github.com/Jellyfish-Insights/andromeda/blob/master/docs/credential_folder_structure.md).
-
-### Running with Docker
+### Installing Docker
 
 See [this](https://docs.docker.com/install/linux/docker-ce/ubuntu/) and [this](https://github.com/docker/compose/releases) for instructions on how to install Docker and
 Docker-compose.
@@ -93,43 +46,96 @@ Windows includes docker-compose.
 Export the `DOCKER_USER` variable to ensure the docker uses the same
 user as the host. In Windows, `$USER` isn't defined, so you'll need
 to substitute it by your username:
+
 ```shell
-  export DOCKER_USER=$(id -u $USER)
+export DOCKER_USER=$(id -u $USER)
 ```
 
-### WebApp
+You can see how to run Aurelia using the docker container on [How to build and
+run the Aurelia container document](../run_on_docker.md).
 
-Do:
-```shell
-  docker-compose -f docker-compose.real.yml up
+## System Bootstrap
+
+You'll need to set up a few things before running Aurelia Webapp:
+- [Get Andromeda running](https://github.com/Jellyfish-Insights/andromeda/blob/master/docs/how_to_setup.md)
+- Install Aurelia's backend and frontend dependencies;
+- [Create initial migration](#initial-migration);
+
+## Cloning Aurelia repository
+
+The first step to Run Aurelia is to clone the repository:
+
+```bash
+git clone https://github.com/Jellyfish-Insights/aurelia
+cd aurelia
 ```
 
-This will make the web application available at https://localhost/.
+Now, we need to get andromeda as git submodule inside aurelia:
 
-### ConsoleApp
-
-Do:
-```shell
-  docker-compose -f docker-compose.daemons.yml up
+```bash
+git submodule update --init --recursive
 ```
 
-This will execute all the jobs. For more information on these jobs check
-[its documentation](./src/README.org#jobs).
+Aurelia uses Andromeda as a git submodule.
+This is because Aurelia needs some of the files included on the Andromeda repository to be compiled.
+To know more about how git submodule see this [link](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
 
-## Running Manually
+## Building and Running
+
+Aurelia is composed of the following subsystems:
+
+  - Backend: Transformers (ConsoleApp);
+  - Frontend: Web App.
+
+Therefore, we will need to compile and run each of these subsystems separately.
+
+### Install frontend dependencies
+
+On a terminal go to `aurelia/src/WebApp` and execute:
+
+```shell
+npm install
+```
+
+### Build back-end
+
+Inside `aurelia/src` do:
+
+```shell
+dotnet clean
+dotnet build
+```
 
 ### Setup PostgreSQL (Linux)
 
-We'll need two database servers, so we recommend to just use the
-docker container in the docker-compose file:
+We will need a database server to run Aurelia's webpage. We recommend to
+just use the docker container in the docker-compose-aurelia.yml file.
+
+However, before creating the database needed by Aurelia, we need to have
+Andromeda's data lake running. You can see more information on how to
+run the data lake database
+[here](https://github.com/Jellyfish-Insights/andromeda/blob/master/docs/how_to_setup.md#setup-postgresql-database-linux).
+
+After you have the data lake container up, run the following command on the root
+of your cloned directory:
+
 ```shell
-  docker-compose -f docker-compose.daemons.yml up -d data_lake analytics_platform
+docker-compose -f docker-compose-aurelia.yml up -d analytics_platform
 ```
+
+If the command ran successfully, you should see something like this on your
+terminal:
+
+```bash
+Creating volume "aurelia_analytics_platform_data" with default driver
+Creating analytics_platform ... done
+```
+
 After that you need to add an entry to `/etc/hosts` as the
 following:
+
 ```shell
-  127.0.0.1 data_lake
-  127.0.0.1 analytics_platform
+127.0.0.1 analytics_platform
 ```
 
 ### Setup PostgreSQL (Windows)
@@ -144,45 +150,48 @@ After that you need to add an entry to
   127.0.0.1 analytics_platform
 ```
 
-Finally, modify all `appsettings.json` files, removing the `Port=5433`
-entry from the connection strings, and changing the user to `postgres`.
+Finally, modify all `appsettings.json` files
+(`aurelia/ConsoleApp/appsettings.json` and `aurelia/WebApp/appsettings.json`)
+removing the `Port=5433` entry from the connection strings, and changing the
+user to `postgres`. You can more about the `appsettings.json` files
+[here](https://github.com/Jellyfish-Insights/aurelia/blob/master/run_on_docker.md#aurelia).
 
-### Adding data to the development databases
+### Initial migration
 
-Since the system is already running in production, we suggest loading
-a dump of the production databases.
-
-### Building the system
-
-Assuming that you just did the [system bootstrap](#system-bootstrap),
-you'll need to apply the migrations:
-
-Navigate to `src/andromeda/Andromeda.ConsoleApp` and run:
+To apply the initial migrations, on terminal navigate to
+`aurelia/src/ConsoleApp` and run:
 
 ```shell
-  ./migrate.sh
+dotnet run migrate --application
 ```
 
 ### Running the system
 
-To execute the `WebApp`, got into its directory and use the `dotnet run`
-command.  When executing the `WebApp`, the web system will be available
-at http://localhost:5000.
+Assuming that you just did the [system bootstrap](#system-bootstrap), it's time
+to run the system.
 
-For running the jobs, you'll need to go to `src/andromeda/Andromeda.ConsoleApp` and run:
+Before running the web app, we will need to get the data from Andromeda's
+data lake and transforming it (format) to be displayed by the Webapp. To do
+this, in the terminal navigate to `aurelia/src/ConsoleApp` and run:
+
 ```shell
-  dotnet run -- fetcher
+dotnet run transformer -s Application
 ```
+
+To execute the `WebApp`, got into its directory (`aurelia/src/WebApp`) and
+execute the following command:
+
+```bash
+dotnet run
+```
+
+When executing the `WebApp`, the web system will be available
+at http://localhost:5000
 
 ### Creating a user
 
 Make sure you set your email as the "DefaultUserEmail" in
-`WebApp/appsettings.json`. Restart Web App and you'll become
+`aurelia/src/WebApp/appsettings.json`. Restart Web App and you'll become
 an admin of the system.
 
 To invite new users, navigate to the User Management page.
-
-## Developing
-
-When developing, make sure you install the git pre-commit hook. For more
-details, see the `hooks/` directory.
