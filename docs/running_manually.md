@@ -14,8 +14,8 @@ You can also run Aurelia via docker container the instructions can be seen
 You need:
   - [.NET Core SDK 2.1.X](https://dotnet.microsoft.com/download/dotnet-core/2.1)
   - [PostgreSQL 10](https://www.postgresql.org/)
-  - [Docker](#Running-with-Docker)
-  - [Docker-compose](#Running-with-Docker)
+  - [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+  - [Docker-compose](https://github.com/docker/compose/releases)
   - [node v9.11.1](https://nodejs.org/dist/v9.11.1/docs/api/);
   - [npm 5.6.0](https://www.npmjs.com/package/npm/v/5.6.0).
 
