@@ -19,9 +19,16 @@ You need:
   - [node v9.11.1](https://nodejs.org/dist/v9.11.1/docs/api/);
   - [npm 5.6.0](https://www.npmjs.com/package/npm/v/5.6.0).
 
-OBS: If you already have another version of node and npm we recommend take a
+If you already have another version of node and npm we recommend take a
 look at the [n package](https://github.com/tj/n) or run Aurelia's docker container as
 presented [here](../run_on_docker.md).
+
+### Minimum requirements to run on a cloud
+  - vCPU: 1
+  - Mem (GiB): 2
+  - Network Performance: Low to Moderate
+
+*Note. Recommend to run on AWS instance `t2.small` or higher.*
 
 ### Note for Windows
 
