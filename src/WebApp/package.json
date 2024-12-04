@@ -112,6 +112,6 @@
     "sass-loader": "^6.0.7",
     "underscore": "^1.8.3",
     "webfontloader": "^1.6.28",
-    "xlsx": "^0.13.2"
+    "xlsx": "^0.17.0"
   }
 }
